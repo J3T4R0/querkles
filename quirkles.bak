@@ -1,0 +1,38 @@
+#lang rosette
+(require rosette/lib/lift)
+(require (only-in racket [string-length racket/string-length] string?))
+ 
+(define-lift string-length [(string?) racket/string-length])
+
+(require (only-in racket build-list))
+
+(define limit 1000)
+ 
+(define (slow xs)
+ (and (= (length xs) limit) (car (map add1 xs))))
+ 
+(define (fast xs)
+ (for/all ([xs xs]) (slow xs)))
+ 
+(define ys (build-list limit identity))
+ 
+(define-symbolic a boolean?)
+ 
+(define xs (if a ys (cdr ys)))
+
+
+;;(define-symbolic* idx len integer
+
+(define (list-set* lst idx val)
+    (match lst
+      [(cons x xs)
+       (cons (if (= idx 0) val x)
+             (list-set* xs (- idx 1) val))]
+      [_ lst]))
+
+ (define-values (width height) (values 5 5))
+
+(define-symbolic* x y integer?)
+(define grid/2d
+   (for/vector ([_ height])
+      (make-vector width #f)))
