@@ -79,3 +79,14 @@ for output in backgrounds:
         'xc:%s' % background_color,
         '%s%s' % (output_prefix, output[1])
     ])
+
+
+
+
+
+
+
+
+
+https://developer.apple.com/documentation/photokit
+https://github.com/B-Sides/ELCImagePickerController
