@@ -1,4 +1,14 @@
 # querkles
+
+
+# Installation
+
+1. Copy the `jsonl_to_csv.py` to your filesystem.
+2. Give it permissions to run using the command `chmod +x jsonl_to_csv.py`
+3. To get the full help documentation run `./jsonl_to_csv.py`
+
+
+
 A rosette racket implementation of the querkles coloring book from https://www.amazon.com/Querkles-Thomas-Pavitte/dp/1781572402
 
 nsimage: http://nsimage.brosteins.com
