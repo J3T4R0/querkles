@@ -20,8 +20,8 @@
 ;;n-digit number a in base b, where the ith digit of a id d(a) --> creating a n x n generator matrix C
 
 ;;for initializing the for loops
-(define (i 0))
-(define (j 0))
+(define i 0 )
+(define j 0)
 
 (define (multiply-generator C, a)
   (let ([v 0]))
@@ -145,8 +145,7 @@
 (define (resolution ((round-up-pow2 (max (diagonal sample-bounds legs) (diagonal sample-bounds legs))))))
 (define (log-2-resolution (log-2-int resolution)))
 
-(define (sobol-interval-to-index log-2-resolution sample-num p)
-  )
+(define (sobol-interval-to-index log-2-resolution sample-num p))
 ;;defines Bounds generic
 (define-generics Sample-bounds (sample-bounds Sample-bounds))
 
@@ -160,5 +159,47 @@
 
 (define (get-index-for-sample sample-num)
   (sobol-interval-to-index log-2-resolution sample-num (Point2f (- current-pixel (view sample-bounds p-min)))))
+
+;; clamps given value val to lie between the values low and high
+(define (clamp val low high)
+  (if (val < low) low)
+  (if (val > high) high)
+  (if (not (or (val < low)  (val > high))) val))
+
+(define (sample-dimensions index dim) ;; dim is for itertion of array current-pixel
+  (let ([s (sobol-sample index dim)]))
+  (if (or (== dim 0) (== dim 1))
+      (let ([s (* s (+ resolution (view sample-bounds p-min)))]))
+      (let ([s (clamp (- s (index-ref current-pixel dim)) 0 0x1.fffffffffffffep-1)]))
+  (s)))
+
+
+;;mitchell and netravali (1998) developed image filter. Image reconstruction where a sinusoidal function captures positive values through clamping
+(define (evaluate point)
+  (* (mitchell1d (* (view point x) (view inv-radius x))) (mitchell1d (* (view point y) (view inv-radius y)))))
+
+(define (mitchell1d x)
+  (let ([x (abs (* 2 x))]))
+  (if (x > 1)
+      (* (+ (* (+ (* (+ ((* (- (* B -1) (* 6 C)) (expt x 3))))  (+ (* 6 B) (* 30 C)) (expt x 2)) (- (* -12 B) (* 48 C))) x) (+ (* 8 B) (* 24 C)) (/ 1 6))))
+  (if (not (x > 1))
+      (* (+ (* (+ (* (- (- 12 (* 9 B) (* 6 C))) (expt x 3)) (- (* -12 B) (* 48 C))) (expt x 2)) (- 6 (* 2 B))) (/ 1 6))))
+
+(define (mitchell-filter radius b c x point) ;; reccomended that B + 2C = 1
+  (evaluate point))
+
+
+;;to call in file execute these commands
+;; (define (start-pixel point)
+;; (define (sample-dimensions index dim)
+;; (define (get-index-for-sample sample-num)
+;; (define (mitchell-filter radius b c x point)
+
+
+
+
+   
+
+
 
 
