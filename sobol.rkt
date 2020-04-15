@@ -1,0 +1,164 @@
+#lang rosette
+(require rosette/lib/lift)
+(require rosette/lib/synthax)
+;histogram down below
+;(require rosette/lib/render-value)
+;(require (planet williams/science/random-source)
+;         (planet williams/science/histogram-with-graphics))
+; 
+;(let ((h (make-discrete-histogram))
+;      (s (make-random-source)))
+;  (random-source-randomize! s)
+;  (with-random-source s
+;    (for ((i (in-range 10000)))
+;      (discrete-histogram-increment! h (random-uniform-int 10))))
+;  (discrete-histogram-plot
+;   h "Histogram of Uniform Random Integers"))
+
+
+;; a bit of dirty work to generate a Sobol sampler for stratified points
+;;n-digit number a in base b, where the ith digit of a id d(a) --> creating a n x n generator matrix C
+
+;;for initializing the for loops
+(define (i 0))
+(define (j 0))
+
+(define (multiply-generator C, a)
+  (let ([v 0]))
+  (let ([i 0]))
+  #:forall (list c)
+  (let ([i (+ i 1)]))
+  (if (a >= 1) (if (and (a == 1) (1 == 1)) (expt v (index-ref C i) ))) 
+  #:guarantee (assert ((not (== a 0)) true)))
+
+(define (scramble 0))
+(define (sample-generator-matrix C a scramble)
+  (*(expt (multiply-generator C a) scramble) 0x1p-32f))
+
+(define (gray-code n)
+  (expt (fxarithmetic-shift-right n 1) n))
+
+(define (string->mformat str n filler)
+  (string-append
+   (build-string (max 0 (- n (string-length str)))
+                 (lambda (x) filler))
+   str))
+
+(define (count-trailing-zeros x) ;; makes it so it accepts one argument of real number n 
+  (string->mformat x))
+
+(define (repeat i C n scramble p)
+(let ([v scramble]))
+(for ([i (i < n)])
+   (let ([+ i 1]))
+   (let ([(index-ref p i) (* v 0x1p-32f)])) ; 1/2^32
+   (let ([v (expt (index-ref C (count-trailing-zeros (i + 1))))]))))
+
+  ;;Sampler implementation
+
+(define (grey-code-sample C n scramble p)
+  (repeat i C n scramble p))
+
+ (define-generics T (samp T))
+
+(struct sample (#[i])
+    #:transparent
+    #:methods gen:T
+    [(define (samp self) (i self))])
+
+(define (swap a b)
+  (let ([c a]))
+  (let ([a b]))
+  (let ([b c])))
+
+(define (shuffle sample count n-dimensions rng)
+   (for ([i (i < count)])
+     (let ([+ i 1]))
+     (let ([other (+ i (random-source-psuedo-randomize! (- count 1) 0 4294967295))]))
+     (for ([j (j < n-dimensions)])
+       (let ([+ j 1]))
+       (swap (samp (index-ref sample (* n-dimensions (+ j i)))) (samp (index-ref (index-ref sample  (* n-dimensiomns (+ other j)))))))))
+
+
+
+  
+;;VanDerCorput
+(define (van-der-corput n-samples-per-pixel n-pixel-samples samples rng)
+  (let ([scramble (random-source-psuedo-randomize! scramble 0 4294967295)]))
+  (let ([c-van-der-corput #[0b10000000000000000000000000000000000 0b1000000000000000000000000000000000 0b100000000000000000000000000000000 0b10000000000000000000000000000000 0b1000000000000000000000000000000 0b100000000000000000000000000000 0b10000000000000000000000000000 0b1000000000000000000000000000 0b100000000000000000000000000 0b10000000000000000000000000 0b1000000000000000000000000 0b100000000000000000000000 0b10000000000000000000000 0b1000000000000000000000 0b100000000000000000000 0b10000000000000000000 0b1000000000000000000 0b100000000000000000 0b10000000000000000 0b1000000000000000 0b100000000000000 0b10000000000000  0b1000000000000  0b100000000000  0b10000000000 0b1000000000 0b100000000  0b10000000   0b1000000  0b100000   0b10000 0b1000 0b100 0b10 0b1]]))
+  (let ([total-samples (* n-samples-per-pixel n-samples-per-pixel)]))
+  (gray-code-sample c-van-der-corput total-samples scrambles samples)
+  (for ([i (i < n-pixel-samples)])
+   (let ([+ i 1]))
+   (shuffle (* (+ samples i) n-samples-per-pixel 1 rng)))
+  (shuffle samples n-pixel-samples n-samples-per-pixel rng))
+  
+  
+;;sequencer
+
+(define (start-pixel point)
+  (for ([i (i < (length samples1d))])
+   (let ([+ i 1]))
+   (van-der-corput 1 samples-per-pixel (index-ref samples1d #[i 0]) rng))
+  (for ([i (i < (length samples2d))])
+   (let ([+ i 1]))
+   (sobol2d 1 samples-per-pixel (index-ref samples2d #[i 0]) rng))
+  (for ([i (i < (length samples1d-array-sizes))])
+   (let ([+ i 1]))
+   (van-der-corput (index-ref samples1d-array-sizes i) samples-per-pixels (index-ref samples1d #[i 0]) rng))
+  (for ([i (i < (length samples2d-array-sizes))])
+   (let ([+ i 1]))
+   (sobol2d (index-ref samples2d-array-sizes i) samples-per-pixels (index-ref samples2d #[i 0]) rng)))
+
+(define (max-min-dist-sampler samples-per-pixel n-sampled-dimensions))
+(define (pixel-sampler (round-up-pow2 samples-per-pixel) n-sampled-dimensions))
+(define (c-pixel (index-ref c-max-min-dist (log-2-int samples-per-pixel))))
+(define (c-max-min-dist #[17] #[32]))
+(define (log-2-int n)
+  (- 31 (log n 2)))
+(define (round-up-pow2 n)
+  (- n 1)
+  (n (bitwise-ior (bitwise-arithmetic-shift-bits 1)))
+  (n (bitwise-ior (bitwise-arithmetic-shift-bits 2)))
+  (n (bitwise-ior (bitwise-arithmetic-shift-bits 4)))
+  (n (bitwise-ior (bitwise-arithmetic-shift-bits 8)))
+  (n (bitwise-ior (bitwise-arithmetic-shift-bits 16)))
+  (+ n 1))
+
+;; defines a struct: point with self values: x and y,  and its method: Point2f()
+(define-generics Point (point Point))
+
+(struct points (x y)
+    #:transparent
+    #:methods gen:Point
+    [(define (Point2f self) (x y self))])
+
+(define (max-min-dist-sampler-start-pixler point)
+  (let ([invSPP (/ 1 samples-per-pixel)]))
+  (for ([i (i < samples-per-pixel)])
+   (let ([+ i 1]))
+   (let ([(index-ref samples2d #[0 1]) (Point2f (* i invSPP) (sample-generator-matrix c-pixel i))]))
+   (shuffle (index-ref samples2d #[0 0]) samples-per-pixel 1 rng))
+   (start-pixel p))
+
+;;define basic helpers for the Sobol Sampler
+(define (resolution ((round-up-pow2 (max (diagonal sample-bounds legs) (diagonal sample-bounds legs))))))
+(define (log-2-resolution (log-2-int resolution)))
+
+(define (sobol-interval-to-index log-2-resolution sample-num p)
+  )
+;;defines Bounds generic
+(define-generics Sample-bounds (sample-bounds Sample-bounds))
+
+(struct sample-bounds (p-min p-max)
+    #:transparent
+    #:methods gen:Sample-bounds
+    (let ([diagonal ((- p-max p-min) self)]))
+    (let ([legs (root 2 (*  diagonal 2))]))
+    [(define (view self) (p-min self))]
+    [(define (diagonal self) (legs self))])
+
+(define (get-index-for-sample sample-num)
+  (sobol-interval-to-index log-2-resolution sample-num (Point2f (- current-pixel (view sample-bounds p-min)))))
+
+
