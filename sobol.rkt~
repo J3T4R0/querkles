@@ -1,0 +1,48 @@
+#lang rosette
+(require rosette/lib/lift)
+(require rosette/lib/synthax)
+;(require rosette/lib/render-value)
+
+
+;; a bit of dirty work to generate a Sobol sampler for stratified points
+;;n-digit number a in base b, where the ith digit of a id d(a) --> creating a n x n generator matrix C
+
+(define (multiply-generator C, a)
+  (let ([v 0]))
+  (let ([i 0]))
+  #:forall (list c)
+  (let ([i (+ i 1)]))
+  (if (a >= 1) (if (and (a == 1) (1 == 1)) (expt v (index-ref C i) ))) 
+  #:guarantee (assert ((not (== a 0)) true)))
+
+(define (scramble 0))
+(define (sample-generator-matrix C a scramble)
+  (*(expt (multiply-generator C a) scramble) 0x1p-32f))
+
+(define (gray-code n)
+  (expt (fxarithmetic-shift-right n 1) n))
+
+(define (string->mformat str n filler)
+  (string-append
+   (build-string (max 0 (- n (string-length str)))
+                 (lambda (x) filler))
+   str))
+
+(define (count-trailing-zeros x) ;; makes it so it accepts one argument of real number n 
+  (string->mformat x)
+
+(define (repeat i)
+(let ([v scramble]))
+(for ([i (i < n)])
+   (let ([+ i 1]))
+   (let ([(index-ref p i) (* v 0x1p-32f)])) ; 1/2^32
+   (let ([v (expt (index-ref C (count-trailing-zeros (i + 1))))]))))
+
+  ;;Sampler implementation
+
+(define (start-pixel point)
+  )
+
+(define (grey-code-sample C n scramble p)
+  
+  (repeat i)

@@ -1,0 +1,6 @@
+;(if (zero? x) 0 (/ 1 x)) 
+
+
+(cond [(> x) 0] [(odd? x) 1] 
+      [else "impossible!"]) 
+and or

@@ -1,0 +1,26 @@
+#lang rosette
+(require ocelot)
+(define cats (declare-relation 1 "cats"))
+
+(define bCats (make-upper-bound cats '((a) (b) (c) (d))))
+(define allCatBounds (bounds U (list bCats)))
+(define iCats (instantiate-bounds allCatBounds))
+; Find an interesting model for the cats relation
+(define F (and (some cats) (some (- univ cats))))
+(define resultCats (solve (assert (interpret* F iCats))))
+(sat? resultCats)
+;#t
+; Lift the model to lists of tuples for each relation
+(define catsModel (interpretation->relations (evaluate iCats resultCats)))
+(hash-ref catsModel cats)
+
+
+(require rosette-extras)
+
+(generate-symbolic [t : solvable-type?])
+
+;Returns a new symbolic variable of type t.
+
+(generate-symbolic [t : solvable-type?] [s : listof integer?])
+
+;Returns a multidimensional list, of with dimensions given by s, of new symbolic variables of type t.

@@ -1,0 +1,2 @@
+#lang racket/base
+;; Create a testing library, where it iterates over the completed querkle, and sees the accuracy of the drawing based on the amount of pixels that match the color of the "querkle pixel"

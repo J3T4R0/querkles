@@ -135,6 +135,8 @@
             [else (cons (first alon) 
     (insert n (rest alon)))])])) 
 
+
+
 (define (partition left? ls)
   (match ls
     ('() (cons '() '()))
@@ -235,6 +237,9 @@
      (choose-best))))
 
 
+
+
 ;;export (repeat i)
+;;export (arrR arrG arrB)
 
 
