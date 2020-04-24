@@ -1,0 +1,238 @@
+# ;; -*- mode: org; coding: utf-8 -*-
+
+#+TITLE: VIGRA_C NEWS
+
+#+BEGIN_COMMENT
+
+Copyright (C) 2018 Benjamin Seppke
+
+MIT License, see the LICENSE file for further copying conditions.
+
+#+END_COMMENT
+
+
+VIGRA_C NEWS --- history of user-visible changes
+================================================
+
+  Please use GitHub for bug reports and pull requests for including
+  your enhancements.
+  
+* Jan 11, 2019
+
+976479c7b0d3e4ee0e458787ce6de68bbebbe44c
+
+** Interface changes
+
+** New interfaces
+
+vigra_has_hdf5_c:
+
+  Tells if vigra_c was compiled with HDF5 support.
+
+vigra_hdf5_numdimensions_c:
+
+  Returns the number of dimensions for a HDF5 file array.
+
+vigra_hdf5_shape_c:
+
+  Fills a shape array of size numDimensions with the actual shape infos
+  of the HDF5 file array.
+
+vigra_hdf5_importarray_c:
+vigra_hdf5_exportarray_c:
+
+  Import and Export of HDF5 arrays.
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
+
+  
+* Oct 27, 2018
+
+Commit 82c8a8ba85c414526dfb62fd15da9dea0b5fadd5
+
+** Interface changes
+
+vigra_localMinima_c:
+vigra_localMaxima_c:
+
+  Additional arguments have been appended to the end of these two
+  algorithms. See the inline documentation for the new parameters
+  and their semantics.
+
+** New interfaces
+
+vigra_imageplusimage_c:
+vigra_imageminusimage_c:
+vigra_imagemultimage_c:
+vigra_imagedivideimage_c:
+vigra_imagepowimage_c:
+
+  Arithmetic operations for images of same size:
+  result = img1 OP img2 with OP in {+, - , *, /, ^}.
+  
+vigra_imageplusvalue_c:
+vigra_imageminusvalue_c:
+vigra_imagemultivalue_c:
+vigra_imagedividevalue_c:
+vigra_imagepowvalue_c:
+
+  Arithmetic operations for an image and a scalar values:
+  result = img OP value with OP in {+, - , *, /, ^}.
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
+
+  
+* Jan 3, 2018
+
+Commit b35267f75f5867a64c0688852ada180da8a9676b
+
+** Interface changes
+
+vigra_medianfilter_c:
+
+  The median filter now needs one additional argument,
+  the border treatment mode. Please note, that the mode
+  CLIP (1) is not supported for median filtering.
+
+vigra_nonlocalmean_c:
+
+  Renamed to lowercase from vigra_nonLocalMean_c.
+	
+** New interfaces
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
+
+
+* Jan 2, 2018
+
+Commit 2871bfbb4578caffc8a8fe64cf8f8b46e0ff7f94
+
+** Interface changes
+
+** New interfaces
+
+vigra_nonLocalMean_c:
+
+  This new function maps the undocumented vigra function
+  for non-local mean filtering. Simple straight-forward
+  wrapping, but (however) untested yet.
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
+
+
+
+* Oct 25, 2017
+
+Commit 91a0bc3a0fc249f5eb96506eacb74e5633242f60
+
+** Interface changes
+
+** New interfaces
+
+vigra_clipimage_c:
+
+  This new function clips the image pixels values' to a given
+  lower and upper value.
+
+** New deprecations
+
+** Bug fixes
+
+vigra_exportgrayimage_c:
+vigra_exportrgbimage_c:
+vigra_exportrgbaimage_c:
+
+  Those functions will now clip the images from 0...255 if the
+  parameter rescale_range is set to false, like it is said in
+  the corresponding documentation. Before, they just type
+  casted the floats to uchars, which resulted in ugly overflows.
+
+** Performance improvements
+
+vigra_convert_grayband_to_argb_c:
+vigra_convert_rgbbands_to_argb_c:
+vigra_convert_rgbabands_to_argb_c:
+
+  Since these functions also perform casts from float to uchar, 
+  they now also clip the values to 0..255 before casting. Adapted
+  the documentation as well.
+
+** Incompatible changes
+
+
+* Sep 18, 2017
+
+Commit a38f36151643a415c5a42280909263078f73c802
+
+** Interface changes
+
+vigra_extractfeatures_gray_c:
+vigra_extractfeatures_rgb_c:
+
+  Respectively 22 and 34 features are now derived.  The arr_out vector
+  size must be, respectively, (n-region + 1) * 22 and (n-region + 1) *
+  34, since features are derived for the background 'region' as well.
+
+** New interfaces
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
+
+
+* Sep 4, 2017
+
+Commit c2f35f7bd85764cdd4e9acd4050d3d6ea16acf89
+
+** Interface changes:
+
+vigra_exportgrayimage_c:
+vigra_exportrgbimage_c:
+vigra_exportrgbaimage_c:
+
+  New argument: rescale_range (booloean)
+
+  When true, the range of intensity values is rescaled from min..max to
+  0..255 for most image formats, which only support 8bit (per channel).
+
+  When false, rounded intensity are stored, if the float values lie
+  within the 0..255 range, otherwise, values are set to 0 when below the
+  range and 255 when above.
+
+** New interfaces
+
+** New deprecations
+
+** Bug fixes
+
+** Performance improvements
+
+** Incompatible changes
