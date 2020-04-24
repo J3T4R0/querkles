@@ -1,5 +1,5 @@
 #lang racket/base
-
+;https://lexi-lambda.github.io/hackett/reference-typeclasses.html#%28part._reference-semigroup-monoid%29
 (require (for-meta 2 racket/base
                      syntax/parse)
          (for-syntax racket/base
